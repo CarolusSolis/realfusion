@@ -302,7 +302,7 @@ def parse_args():
     parser.add_argument(
         "--report_to",
         type=str,
-        default="tensorboard",
+        default="none",
         help=(
             'The integration to report the results and logs to. Supported platforms are `"tensorboard"`'
             ' (default), `"wandb"` and `"comet_ml"`. Use `"all"` to report to all integrations.'
@@ -571,13 +571,22 @@ def main():
 
     accelerator_project_config = ProjectConfiguration(total_limit=args.checkpoints_total_limit)
 
-    accelerator = Accelerator(
-        gradient_accumulation_steps=args.gradient_accumulation_steps,
-        mixed_precision=args.mixed_precision,
-        log_with=args.report_to,
-        logging_dir=logging_dir,
-        project_config=accelerator_project_config,
-    )
+    if args.report_to == 'none':
+        print("here")
+        accelerator = Accelerator(
+            gradient_accumulation_steps=args.gradient_accumulation_steps,
+            mixed_precision=args.mixed_precision,
+            logging_dir=logging_dir,
+            project_config=accelerator_project_config,
+        )
+    else:
+        accelerator = Accelerator(
+            gradient_accumulation_steps=args.gradient_accumulation_steps,
+            mixed_precision=args.mixed_precision,
+            log_with=args.report_to,
+            logging_dir=logging_dir,
+            project_config=accelerator_project_config,
+        )
 
     if args.report_to == "wandb":
         if not is_wandb_available():
