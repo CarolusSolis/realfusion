@@ -287,6 +287,11 @@ To run multiple jobs in parallel on a SLURM cluster, you can use a script such a
 python scripts/example-slurm.py
 ```
 
+Note: if the it says distutils doesn't have versions, modify tensorboard to use this instead:
+```bash
+LooseVersion = packaging.version.parse
+```
+
 ### Pretrained checkpoints
 
 You can download our full checkpoints and logs for the example images using
