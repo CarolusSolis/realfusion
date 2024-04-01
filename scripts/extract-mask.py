@@ -71,7 +71,7 @@ def main(args: Args):
     
 
 def expand_to_size(image: Tensor, mask: Tensor, size: int):
-    assert image.shape[-2:] == mask.shape[-2:], f'{image.shape=} and {mask.shape=}'
+    assert image.shape[-2:] == mask.shape[-2:], 'image.shape={} and mask.shape={}'.format(image.shape, mask.shape)
     H, W = image.shape[-2:]
     if H == W == size: 
         return image, mask
